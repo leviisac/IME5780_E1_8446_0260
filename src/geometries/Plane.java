@@ -95,7 +95,7 @@ public class Plane implements Geometry {
         Vector NegetiveN = new Vector(this.get_vec());
         NegetiveN.scale(-1);
         //create (P0-Q0) = PQ
-        Point3D temp = new Point3D(ray.get_POO());
+        Point3D temp = new Point3D(ray.get_P0());
         temp.subtract(this._Q);
         Vector PQ = new Vector(temp);
         //create N*V
@@ -108,7 +108,7 @@ public class Plane implements Geometry {
             return new ArrayList<Point3D>();
 
         //create p
-        Point3D p=new Point3D(ray.get_POO());
+        Point3D p=new Point3D(ray.get_P0());
         Vector temp1 = new Vector(ray.get_direction());
         temp1.scale(t);
         p.add(temp1);

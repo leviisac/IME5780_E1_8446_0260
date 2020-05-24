@@ -13,47 +13,56 @@ import primitives.Vector;
 import java.util.List;
 
 public class Tube extends RadialGeometry{
-     Point3D _axisPoint;
-     Vector _axisDirection;
+    private Ray _ray;
 
-// ***************** Constructors ********************** //
-
-    public Tube(double _radius, Point3D _axisPoint, Vector _axisDirection) {
-        super(_radius);
-        this._axisPoint = new Point3D(_axisPoint);
-        this._axisDirection = new Vector(_axisDirection);
+    /**
+     * this is the basic constructor for a ray:
+     * he receive ray and radius
+     *
+     * @param radius
+     * @param ray
+     * @throws IllegalArgumentException when the radius is equal or smaller to zero so we don't have a tube
+     */
+    public Tube(Ray ray, double radius) {
+        super(radius);
+        if (radius <= 0)
+            throw new IllegalArgumentException("It's not possible to have radius equals to 0");
+        this._ray = new Ray(ray);
     }
 
-    public Tube(double _radius) {
-        super(_radius);
+    /**
+     * simple function get
+     *
+     * @return the ray
+     */
+    public Ray getRay() {
+        return _ray;
     }
 
-    public Tube(RadialGeometry r) {
-        super(r);
-    }
-
-// ***************** Getters ********************** //
-
-
-    public Point3D get_axisPoint() {
-        return new Point3D(_axisPoint);
-    }
-
-    public Vector get_axisDirection() {
-        return new Vector(_axisDirection);
+    /**
+     * the fucnction should return the normal of tube in size one
+     *normalize(p-center) = normal
+     * @param point- he recive a point on cycle tube
+     * @return a normal of the tube normalize
+     */
+    @Override
+    public Vector getNormal(Point3D point) {
+        // distance from axis start to the projection of the point onto axis
+        double scaleNumber = _ray.get_direction().dotProduct(point.subtract(_ray.get_P0()));
+        // he found the point on the border of the tube
+        Point3D o = _ray.get_P0().add(_ray.get_direction().scale(scaleNumber));
+        // the normal of tube his the point on the border of the tub minus the central
+        Vector normal_tube = point.subtract(o);
+        //rerun normal tube vector in size one
+        return normal_tube.normalize();
     }
 
 
 
 
     @Override
-    public Vector getNormal(Point3D point) {
-
-        return null;
-    }
-
-
-    public List<Point3D> findIntersections(Ray ray) {
-        return null;
+    public String toString() {
+        return "ray: " + _ray +
+                ", radius: " + _radius;
     }
 }

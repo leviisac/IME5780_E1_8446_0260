@@ -41,12 +41,17 @@ public class Sphere extends RadialGeometry{
 
 
     // ***************** Operations ******************** //
-
-    public Vector getNormal(Point3D point){
-
-        return null;
+    /**
+     * the function find the normal vector of the sphere at a specific point 3d
+     * normalize(p-center) = normal
+     * @param p the specified point
+     * @return new vector normal of the sphere in size one
+     */
+    @Override
+    public Vector getNormal(Point3D p) {
+        Vector normal_sphere = p.subtract(_center);
+        return normal_sphere.normalize();
     }
-
 
 
 }

@@ -10,7 +10,7 @@ package primitives;
 public class Ray {
 
 
-    private Point3D _POO;
+    private Point3D _P0;
     private Vector _direction;
 
 
@@ -22,17 +22,17 @@ public class Ray {
      *  constructor that receive a Ray variable that contains the point of origin and the direction
      */
     public Ray(Ray ray){
-        this._POO = ray.get_POO();
+        this._P0 = ray.get_P0();
         this._direction = ray.get_direction();
     }
 
     /**
      *constructor
-     * @param _POO
+     * @param _P0
      * @param _direction
      */
-    public Ray(Point3D _POO, Vector _direction) {
-        this.set_POO(_POO);
+    public Ray(Point3D _P0, Vector _direction) {
+        this.set_P0(_P0);
         this.set_direction(_direction);
         this._direction.normalize();
     }
@@ -43,12 +43,12 @@ public class Ray {
      * ***************** Getters/Setters ********************** //
       */
 
-    public void set_POO(Point3D _POO) {
-        this._POO = new Point3D(_POO);
+    public void set_P0(Point3D _P0) {
+        this._P0 = new Point3D(_P0);
     }
 
-    public Point3D get_POO() {
-        return new Point3D(_POO);
+    public Point3D get_P0() {
+        return new Point3D(_P0);
 
     }
 
