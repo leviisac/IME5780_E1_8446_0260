@@ -67,6 +67,14 @@ public class Ray {
 
         return "direction: " + _direction.toString();
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if(!(obj instanceof Ray))
+            return false;
+        Ray ray2 = (Ray)obj;
+        return this._direction.equals(ray2._direction) && this._P0.equals(ray2._P0);
+    }
 }
 
 
