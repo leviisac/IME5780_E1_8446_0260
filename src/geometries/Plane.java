@@ -12,12 +12,21 @@ import primitives.Vector;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * class plane represents a plane in 3D cartesian coordinate system
+ */
 public class Plane implements Geometry {
      Vector _vec;//the vector that is part of the plane
     private Point3D _Q;//the point that is part of the plane
 
     // ***************** Constructors ********************** //
-
+    /**
+     * this is a basic constructor who build a plane from 3 points int cartesian coordinates system
+     *
+     * @param p1 1st point
+     * @param p2 2nd point
+     * @param p3 3rd point
+     */
 
     public Plane(Point3D p1, Point3D p2, Point3D p3) {
         _Q = new Point3D(p1);
@@ -31,6 +40,12 @@ public class Plane implements Geometry {
 
     }
 
+    /**
+     * this constructor build a plane from a single point and a vector that will be normalized
+     *
+     * @param q      the point
+     * @param normal the vector normalized we'll use to build the plane
+     */
     public Plane(Vector normal, Point3D q) {
         this._vec = normal;
         this._Q = q;
@@ -54,13 +69,27 @@ public class Plane implements Geometry {
 
 
     // ****************************************************** //
+
+
+    /**
+     * this function allows us to compute the normal vector in a specific point in the plane
+     *
+     * @param p the point where we want to compute the normal vector
+     * @return the normal vector computed in the specific point
+     */
   @Override
     public Vector getNormal(Point3D p) {
         return _vec;
     }
 
+
+    /**
+     * this function returns the normal vector to the plane
+     *
+     * @return the vector normal to the plane
+     */
     public Vector getNormal() {
-        return getNormal(null);
+        return _vec;
     }
 
 

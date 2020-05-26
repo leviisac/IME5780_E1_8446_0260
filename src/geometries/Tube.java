@@ -49,9 +49,9 @@ public class Tube extends RadialGeometry{
     public Vector getNormal(Point3D point) {
         // distance from axis start to the projection of the point onto axis
         double scaleNumber = _ray.get_direction().dotProduct(point.subtract(_ray.get_P0()));
-        // he found the point on the border of the tube
+        // he found the point on the border of the tube  0
         Point3D o = _ray.get_P0().add(_ray.get_direction().scale(scaleNumber));
-        // the normal of tube his the point on the border of the tub minus the central
+        // the normal of tube his the point on the border of the tub minus the central (p0-0)
         Vector normal_tube = point.subtract(o);
         //rerun normal tube vector in size one
         return normal_tube.normalize();

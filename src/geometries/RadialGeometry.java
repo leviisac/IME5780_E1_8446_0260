@@ -1,7 +1,7 @@
 package geometries;
 
 
-//this class is responsible for the Round shapes like sphere and cylinder
+//classe responsável por circunferências
 public abstract class RadialGeometry implements Geometry {
 
     protected double _radius;//the radius

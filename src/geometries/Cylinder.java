@@ -74,7 +74,7 @@ public class Cylinder extends Tube {
 
         // if the point is at a base
         if (isZero(t) || isZero(_height - t)) // if it's close to 0, we'll get ZERO vector exception
-            return v;
+        return v;
 
         p0 = p0.add(v.scale(t));
         return point.subtract(p0).normalize();

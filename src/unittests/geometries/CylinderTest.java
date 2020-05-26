@@ -1,3 +1,8 @@
+/**
+ * Created by Levi and David.
+ * 988446 and 100260
+ */
+
 package unittests.geometries;
 
 import geometries.Cylinder;
@@ -12,7 +17,6 @@ import static org.junit.Assert.assertEquals;
 /**
  *Test method for {@link geometries.Cylinder}.
  *  * Cylinder test class test cylinder in 3D Cartesian coordinate
- *  @author Aaron
  */
 public class CylinderTest {
     // ============ Equivalence Partitions Tests ==============

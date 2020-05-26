@@ -1,3 +1,8 @@
+/**
+ * Created by Levi and David.
+ * 988446 and 100260
+ */
+
 package unittests.geometries;
 
 import geometries.Triangle;
@@ -14,7 +19,6 @@ import static org.junit.Assert.*;
 /**
 Test method for {@link geometries.Triangle}.
  *  Triangle test class test triangle in 3D Cartesian coordinate
- *  @author Aaron
  */
 
 public class TriangleTest {

@@ -1,3 +1,8 @@
+/**
+ * Created by Levi and David.
+ * 988446 and 100260
+ */
+
 package unittests.geometries;
 
 import geometries.Tube;
@@ -13,7 +18,6 @@ import static org.junit.Assert.fail;
 /**
  Test method for {@link geometries.Tube}.
  *  tube test class test tube in 3D Cartesian coordinate
- *  @author Aaron
  */
 
 public class TubeTest {
