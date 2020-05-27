@@ -41,7 +41,7 @@ public class Tube extends RadialGeometry{
 
     /**
      * the fucnction should return the normal of tube in size one
-     *normalize(p-center) = normal
+     * normalize(p-center) = normal
      * @param point- he recive a point on cycle tube
      * @return a normal of the tube normalize
      */

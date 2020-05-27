@@ -43,7 +43,7 @@ public class Plane implements Geometry {
     /**
      * this constructor build a plane from a single point and a vector that will be normalized
      *
-     * @param q      the point
+     * @param q the point
      * @param normal the vector normalized we'll use to build the plane
      */
     public Plane(Vector normal, Point3D q) {

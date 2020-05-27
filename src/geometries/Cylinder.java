@@ -60,15 +60,15 @@ public class Cylinder extends Tube {
      * @return a normal of the cylinder normalize (new vector in size one)
      */
     @Override
-    public Vector getNormal(Point3D point) {
+    public Vector getNormal(Point3D point) { //recebemos um ponto , que partir dele queremos a normal
         Point3D p0 = getRay().get_P0();
         Vector v = getRay().get_direction();
 
         // projection of P-O on the ray:
         double t;
         try {
-            t = point.subtract(p0).dotProduct(v);
-        } catch (IllegalArgumentException e) { // P = O - center of the 1st base
+            t = point.subtract(p0).dotProduct(v); //(p-p0)*v=(a,b,c)*(x,y,z)
+    } catch (IllegalArgumentException e) { // P = O - center of the 1st base
             return v;
         }
 
