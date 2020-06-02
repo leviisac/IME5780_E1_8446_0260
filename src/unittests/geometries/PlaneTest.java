@@ -67,5 +67,57 @@ public class PlaneTest{
         assertEquals(0, p1.subtract(p3).dotProduct(plane.getNormal(receivedPoint)), 0.00001);
     }
 
+    /**
+     * we test the find intersection function with ray and plane
+     */
+    @Test
+    public void findIntersections() {
+        // ============ Equivalence Partitions Tests ==============
+        Plane plane = new Plane(new Point3D(5, 4, 0), new Point3D(7, 8, 0), new Point3D(5, 6, 0));
+        Ray ray;
+
+        //TC01: the ray not included parallel to the plane
+        ray = new Ray(new Point3D(2, 6, 1), new Vector(3, 3, 0));
+        List<Point3D> intersectionsList = plane.findIntersections(ray);
+        assertNull("must be empty", intersectionsList);
+
+        //TC02: the ray included parallel to the plane
+        ray = new Ray(new Point3D(2, 6, 0), new Vector(3, 3, 0));
+        intersectionsList = plane.findIntersections(ray);
+        assertNull("must be empty", intersectionsList);
+
+        //TC03:the ray orthogonal to plane, p0 before plane
+        ray = new Ray(new Point3D(2, 6, 1), new Vector(0, 0, -1));
+        intersectionsList = plane.findIntersections(ray);
+        intersectionsList = plane.findIntersections(ray);
+        assertEquals("must be equal to 1", 1, intersectionsList.size());
+        assertEquals("must be the same", new Point3D(2, 6, 0), new Point3D(intersectionsList.get(0)));
+
+        // TC05:the ray orthogonal to plane, p0 after plane
+        ray = new Ray(new Point3D(2, 6, 1), new Vector(0, 0, 1));
+        intersectionsList = plane.findIntersections(ray);
+        assertNull("must be empty", intersectionsList);
+
+        //TC04:the ray orthogonal to plane, p0 in plane
+        ray = new Ray(new Point3D(2, 6, 0), new Vector(0, 0, 1));
+        intersectionsList = plane.findIntersections(ray);
+        assertNull("must be empty", intersectionsList);
+
+        //TC07:the Ray neither orthogonal nor parallel to the plane without intersection
+        ray = new Ray(new Point3D(3, 3, 3), new Vector(-1, 0, -1));
+        intersectionsList = plane.findIntersections(ray);
+        assertNotNull("must be equal empty", intersectionsList);
+        assertEquals("must be the same", new Point3D(0, 3, 0), intersectionsList.get(0));
+
+        //TC06:Ray is neither orthogonal nor parallel to and begins at the plane (𝑃0 is in the plane, but not the ray)
+        ray = new Ray(new Point3D(3, 3, 3), new Vector(-1, 0, -1));
+        plane = new Plane(new Point3D(2, 4, 0), new Point3D(7, 8, 0), new Point3D(5, 6, 0));
+        intersectionsList = plane.findIntersections(ray);
+        assertNotNull("must be not empty", intersectionsList);
+        assertEquals("must be equal to one", 1,intersectionsList.size());
+        assertEquals("must be equal",new Point3D(0,3,0),intersectionsList.get(0));
+
+    }
+
 
 }

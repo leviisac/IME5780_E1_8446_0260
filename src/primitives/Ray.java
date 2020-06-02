@@ -56,6 +56,16 @@ public class Ray {
         this._direction = new Vector(_direction);
     }
 
+    /**
+     * P0 + v*t get a point in the ray , with the given distance
+     * @param distance from the ray head
+     * @return the point
+     */
+
+    public Point3D getTargetPoint(double distance) {
+        return _P0.add(_direction.scale(distance));
+    }
+
     public Vector get_direction() {
         return new Vector(_direction);
     }

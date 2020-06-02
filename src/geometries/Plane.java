@@ -12,6 +12,8 @@ import primitives.Vector;
 import java.util.ArrayList;
 import java.util.List;
 
+import static primitives.Util.alignZero;
+
 /**
  * class plane represents a plane in 3D cartesian coordinate system
  */
@@ -118,7 +120,7 @@ public class Plane implements Geometry {
     }
 
 
-    public List<Point3D> findIntersections(Ray ray){
+  /*  public List<Point3D> findIntersections(Ray ray){
 
         //create -N
         Vector NegetiveN = new Vector(this.get_vec());
@@ -134,7 +136,7 @@ public class Plane implements Geometry {
         double t = (NegetiveN.dotProduct(PQ))/nv;
 
         if(t<0)
-            return new ArrayList<Point3D>();
+            return  null;
 
         //create p
         Point3D p=new Point3D(ray.get_P0());
@@ -147,6 +149,28 @@ public class Plane implements Geometry {
         array.add(p);
         return array;
 
+    }*/
+
+   public List<Point3D> findIntersections(Ray ray) {
+        Vector pq0;
+        try {
+            pq0 = _Q.subtract(ray.get_P0());
+        } catch (IllegalArgumentException e) {
+            return null;
+        }
+
+        double nv = alignZero(_vec.dotProduct(ray.get_direction()));
+        //if the ray are paralle to the plan so is not intersections
+        if (nv == 0)
+            return null;
+
+        // intersections point equal 𝑃 = 𝑃0 + 𝑡 ∙ 𝑣, 𝑡 ≥ 0
+        double t = alignZero(_vec.dotProduct(pq0) / nv);
+        //t>=0, and hence:
+        if (t <= 0)
+            return null;
+
+        return List.of(ray.getTargetPoint(t));
     }
 
     @Override

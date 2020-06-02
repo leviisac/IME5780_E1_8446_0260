@@ -55,14 +55,14 @@ public class Point3D  {
     // ***************** Administration ******************** //
     //this function compare between 2 Point3D, if they are equal the function return 0(zero)
     //and -1(minus 1) if they aren't equal
-    public boolean equals(Point3D P3) {
+    @Override
+    public boolean equals(Object obj) {
+        if(!(obj instanceof Point3D))
+            return false;
 
-        if (this._x.equals(P3._x) && this._y.equals(P3._y)  && this._z.equals(P3._z)) {
-            return true;
-        }
-        return  false;
+        Point3D P3 = (Point3D) obj;
+        return this._x.equals(P3._x) && this._y.equals(P3._y) && this._z.equals(P3._z);
     }
-
 
     public String toString() {
 

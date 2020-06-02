@@ -15,6 +15,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import static primitives.Util.isZero;
+
 public class Triangle extends Polygon {
 
     Point3D _p1;//the first point of the triangle
@@ -26,7 +28,7 @@ public class Triangle extends Polygon {
     //constructor that receive tree points and Initializing the tree point of the triangle with their values
     public Triangle(Point3D p1, Point3D p2, Point3D p3)
     {
-        super();
+         super(p1,p2,p3);
         _p1=new Point3D(p1);
         _p2=new Point3D(p2);
         _p3=new Point3D(p3);
@@ -55,15 +57,34 @@ public class Triangle extends Polygon {
 
 
 
-    /** This functions calculate the normal
-     * vector of the triangle
-     * */
-    public Vector getNormal(Point3D p) {
+
+
+    /**
+     * @param ray - he his the ray that insert the object
+     * @return list of Intersections
+     */
+    public List<Point3D> findIntersections(Ray ray) {
+        List<Point3D> intersections = _plane.findIntersections(ray);
+        if (intersections == null) return null;
+
+        Point3D p0 = ray.get_P0();
+        Vector v = ray.get_direction();
+        //we creat the tree vector
+        Vector v1 = _vertices.get(0).subtract(p0);
+        Vector v2 = _vertices.get(1).subtract(p0);
+        Vector v3 = _vertices.get(2).subtract(p0);
+
+        double side1 = v.dotProduct(v1.crossProduct(v2));
+        if (isZero(side1)) return null;
+        double side2 = v.dotProduct(v2.crossProduct(v3));
+        if (isZero(side2)) return null;
+        double side3 = v.dotProduct(v3.crossProduct(v1));
+        if (isZero(side3)) return null;
+
+        if ((side1 > 0 && side2 > 0 && side3 > 0) || (side1 < 0 && side2 < 0 && side3 < 0)) return intersections;
 
         return null;
     }
-
-
 
 
 
