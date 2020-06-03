@@ -32,7 +32,11 @@ public class Geometries implements Intersectable {
     public void add(Intersectable... geometry) {
         intersectableList.addAll(Arrays.asList(geometry));
     }
-
+    /**
+     * function who find the intersection from a ray in all the geometries in the list
+     *
+     * @param ray
+     */
     @Override
     public List<Point3D> findIntersections(Ray ray) {
 

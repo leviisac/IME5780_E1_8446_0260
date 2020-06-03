@@ -12,7 +12,7 @@ import static org.junit.Assert.*;
 public class GeometriesTest {
 
     /**
-     * Test Method for
+     * Test Method for -retorna PONTO de intersecção
      * {@link Geometries#findIntersections(Ray)}
      */
     @Test

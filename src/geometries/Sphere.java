@@ -95,7 +95,7 @@ public class Sphere extends RadialGeometry{
         if (t1 > 0 && t2 > 0)
             return List.of(ray.getTargetPoint(t1), ray.getTargetPoint(t2)); //P1 , P2
         if (t1 > 0)
-            return List.of(ray.getTargetPoint(t1));
+            return List.of(ray.getTargetPoint(t1)); //just one point
         if (t2 > 0)
             return List.of(ray.getTargetPoint(t2));
         return null;

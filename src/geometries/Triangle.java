@@ -63,6 +63,7 @@ public class Triangle extends Polygon {
      * @param ray - he his the ray that insert the object
      * @return list of Intersections
      */
+    @Override
     public List<Point3D> findIntersections(Ray ray) {
         List<Point3D> intersections = _plane.findIntersections(ray);
         if (intersections == null) return null;

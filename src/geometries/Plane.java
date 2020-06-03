@@ -120,36 +120,10 @@ public class Plane implements Geometry {
     }
 
 
-  /*  public List<Point3D> findIntersections(Ray ray){
-
-        //create -N
-        Vector NegetiveN = new Vector(this.get_vec());
-        NegetiveN.scale(-1);
-        //create (P0-Q0) = PQ
-        Point3D temp = new Point3D(ray.get_P0());
-        temp.subtract(this._Q);
-        Vector PQ = new Vector(temp);
-        //create N*V
-        Vector NV = new Vector(this._vec);
-        //create t
-        double nv = NV.dotProduct(ray.get_direction());
-        double t = (NegetiveN.dotProduct(PQ))/nv;
-
-        if(t<0)
-            return  null;
-
-        //create p
-        Point3D p=new Point3D(ray.get_P0());
-        Vector temp1 = new Vector(ray.get_direction());
-        temp1.scale(t);
-        p.add(temp1);
-
-        //Dynamic allocation
-        ArrayList<Point3D> array=new ArrayList<Point3D>();
-        array.add(p);
-        return array;
-
-    }*/
+    /**
+     * @param ray - he his the ray that insert the object
+     * @return a list of all intersection
+     */
 
    public List<Point3D> findIntersections(Ray ray) {
         Vector pq0;
