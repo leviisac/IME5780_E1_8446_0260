@@ -15,6 +15,7 @@ import static primitives.Util.*;
  * @author Dan Zilberstein
  */
 public final class Coordinate {
+
     /**
      * Coordinate value, intentionally "package-friendly" due to performance
      * constraints
@@ -40,6 +41,10 @@ public final class Coordinate {
      */
     public Coordinate(Coordinate other) {
         _coord = other._coord;
+
+
+
+
     }
 
     /**
