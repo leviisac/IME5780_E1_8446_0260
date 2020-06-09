@@ -15,7 +15,7 @@ import primitives.Color;
  * _geometries objects/shapes that exist in scene
  * _camera point of view, that from there we look on the scene, through an imagine view plane
  * _distance distance from camere to the imagine view plane
- * @author moshe
+ * @author levi
  */
 public class Scene {
     private String _name;

@@ -37,15 +37,14 @@ public class IntersectionTest {
         //w X h--- 3 X 3
         int Nx = 3;
         int Ny = 3;
-        for (int i = 0; i < Ny; ++i) {
-            for (int j = 0; j < Nx; ++j) {
+        for (int i = 0; i < Ny; ++i) { // Rows
+            for (int j = 0; j < Nx; ++j) { //Columns
                 results = geometry.findIntersections(cam.constructRayThroughPixel(Nx, Ny, j, i, 1, 3, 3));
-                ;
                 if (results != null)
                     count += results.size();
             }
         }
-        assertEquals("not good", expected, count);
+        assertEquals("Invalid number of intersections", expected, count);
     }
 
     /**

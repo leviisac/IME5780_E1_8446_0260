@@ -72,7 +72,7 @@ public class Camera {
      * @return ray where outgoing construct Ray Through Pixel
      */
     public Ray constructRayThroughPixel(int nX, int nY, int i, int j, double screenDistance, double screenWidth, double screenHeight) {
-        //image center
+        //image center pc=p0+d*vt0
         Point3D screenCenter = _p0.add(_vto.scale(screenDistance));
         //ratio (pixel height&width)
         double ry = screenHeight / nY;
