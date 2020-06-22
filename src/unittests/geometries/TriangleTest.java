@@ -5,6 +5,7 @@
 
 package unittests.geometries;
 
+import geometries.Intersectable;
 import geometries.Triangle;
 import org.junit.Test;
 import primitives.Point3D;
@@ -22,65 +23,60 @@ Test method for {@link geometries.Triangle}.
  */
 
 public class TriangleTest {
-    /**
-     * we test if the constructor find the problem in this case
-     */
     @Test
-    public void testConstructor() {
+    public void getNormal() {
         // ============ Equivalence Partitions Tests ==============
-        //TC01:with two same points and so it's not a triangle it's a vector
-        try {
-            new Triangle( new Point3D(0, 0, 0), new Point3D(0, 0, 0), new Point3D(1, 2, 3));
-            fail("Constructed a vector not a triangle ");
-        } catch (IllegalArgumentException e) {
-
-        }
+        // TC01: There is a simple single test here
+        Triangle tr = new Triangle(new Point3D(0, 0, 1),
+                new Point3D(1, 0, 0),
+                new Point3D(0, 1, 0));
+        double sqrt3 = Math.sqrt(1d / 3);
+        assertEquals("Bad normal to triangle", new Vector(sqrt3, sqrt3, sqrt3),
+                tr.getNormal(new Point3D(0, 0, 1)));
     }
 
 
     /**
-     * we test if when we have intersection witch ray and triangle we find intersection if exist amd if he found the right intersection
+     * Test Method for
+     * {@link Triangle#findIntersections(Ray)}
      */
     @Test
-    public void findIntersections() {
+    public void testFindIntersections() {
+        Triangle triangle = new Triangle(
+                new Point3D(0,1,0),
+                new Point3D(1,0,0),
+                new Point3D(0.5, 0.5, 1));
+
         // ============ Equivalence Partitions Tests ==============
-        //TC01 inside triangle
-        Ray ray = new Ray(new Point3D(-4, 4, 3), new Vector(4, -2, -1));
-        Triangle triangle = new Triangle(new Point3D(0, 0, 0), new Point3D(0, 6, 0), new Point3D(0, 0, 8));
-        List<Point3D> intersectionsList = triangle.findIntersections(ray);
-        assertNotNull("must be not empty", intersectionsList);
-        assertEquals("must be equal to 1", 1, intersectionsList.size());
-        assertEquals("must be the same", new Point3D(0, 2, 2), intersectionsList.get(0));
 
-        //TC02 outside against edge
-        ray = new Ray(new Point3D(5, 6, 0), new Vector(0, 0, -1));
-        intersectionsList = triangle.findIntersections(ray);
-        assertNull("must be empty", intersectionsList);
+        // TC01: Ray's line is inside triangle (1 point)
+        assertEquals("line is inside triangle" , List.of(new Intersectable.GeoPoint(triangle,new Point3D(0.48, 0.52, 0.23))),
+                triangle.findIntersections(new Ray(new Point3D(-1.6, 0, 0), new Vector(2.08, 0.52,0.23))));
 
+        // TC02: Ray's line is outside against edge (0 points)
+        assertEquals("line is outside against edge" ,null,
+                triangle.findIntersections(new Ray(new Point3D(-1.6, 0, 0), new Vector(1.6, 1,0.33))));
 
-        //TC02 outside against vertex
-        ray = new Ray(new Point3D(-1, -1, 0), new Vector(0, 0, -1));
-        intersectionsList = triangle.findIntersections(ray);
-        assertNull("must be empty", intersectionsList);
+        // TC03: Ray's line is outside against vertex (0 points)
+        assertEquals("line is outside against vertex" ,null,
+                triangle.findIntersections(new Ray(new Point3D(-1.6, 0, 0), new Vector(2.1, 0.5,1.31))));
 
 
         // =============== Boundary Values Tests ==================
 
-        //ray starts "before" the plane
-        //TC10 on edge
-        ray = new Ray(new Point3D(-2, 0, 5), new Vector(1, 0, -1));
-        intersectionsList = triangle.findIntersections(ray);
-        assertNull("must be empty", intersectionsList);
+        // TC11: Ray's line is on edge (0 points)
+        assertEquals("line is on edge" , null,
+                triangle.findIntersections(new Ray(new Point3D(-1.6, 0, 0), new Vector(1.76, 0.84,0.33))));
 
-        // TC12 in vertex
-        ray = new Ray(new Point3D(6, 0, 1), new Vector(1, 0, -1));
-        intersectionsList = triangle.findIntersections(ray);
-        assertNull("must be not empty", intersectionsList);
+        //TC12: Ray's line is on vertex (O points)
+        assertEquals("line is on vertex",null,
+                triangle.findIntersections(new Ray(new Point3D(-1.6, 0, 0), new Vector(2.1, 0.5,1))));
 
-        // TC13 on edge continuation
-        ray = new Ray(new Point3D(10, 0, 0), new Vector(0, 0, -1));
-        intersectionsList = triangle.findIntersections(ray);
-        assertNull("must be empty", intersectionsList);
+        //TC13: Ray's line is on edge's continuation (0 points)
+        assertEquals("line is on edge's continuation",null,
+                triangle.findIntersections(new Ray(new Point3D(-1.6, 0, 0), new Vector(1.9, 0.7,1.41))));
+
+
     }
 
 }

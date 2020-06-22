@@ -1,4 +1,4 @@
-package unittests;
+package unittests.renderer;
 
 import java.awt.Color;
 import java.awt.image.BufferedImage;
@@ -15,7 +15,7 @@ import javax.imageio.stream.*;
  * of View Plane - pixel matrix size and resolution 
  * @author Dan
  */
-public class ImageWriter {
+public class ImageWriterTest {
 	private double _imageWidth, _imageHeight;
 	private int _nX, _nY;
 
@@ -34,7 +34,7 @@ public class ImageWriter {
 	 * @param nX amount of pixels by Width 
 	 * @param nY amount of pixels by height
 	 */
-	public ImageWriter(String imageName, double width, double height, int nX, int nY) {
+	public ImageWriterTest(String imageName, double width, double height, int nX, int nY) {
 		_imageName = imageName;
 		_imageWidth = width;
 		_imageHeight = height;

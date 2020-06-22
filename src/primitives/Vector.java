@@ -12,6 +12,7 @@ public class Vector {
 
     /**
      * vector represented by the head point (Point3D)
+     *
      */
     Point3D _head;
 
@@ -97,8 +98,8 @@ public class Vector {
      *
      * @param vector
      */
-    public void add(Vector vector) {
-        this._head.add(vector);
+    public Vector add(Vector vector) {
+        return new Vector(this._head.add(vector));
     }
 
     /**
@@ -201,9 +202,9 @@ public class Vector {
      * @return a1*a2 + b1*b2 + c1*c2
      */
     public double dotProduct(Vector vector) {
-        return (this._head._x._coord * vector._head._x._coord +
+        return this._head._x._coord * vector._head._x._coord +
                 this._head._y._coord * vector._head._y._coord +
-                this._head._z._coord * vector._head._z._coord);
+                this._head._z._coord * vector._head._z._coord;
     }
 
 }

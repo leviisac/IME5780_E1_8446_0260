@@ -15,7 +15,7 @@ import static primitives.Util.*;
  * 
  * @author Dan
  */
-public class Polygon implements Geometry {
+public class Polygon extends Geometry {
     /**
      * List of polygon's vertices
      */
@@ -28,7 +28,7 @@ public class Polygon implements Geometry {
     /**
      * Polygon constructor based on vertices list. The list must be ordered by edge
      * path. The polygon must be convex.
-     * 
+     *
      * @param vertices list of vertices according to their order by edge path
      * @throws IllegalArgumentException in any case of illegal combination of
      *                                  vertices:
@@ -85,13 +85,53 @@ public class Polygon implements Geometry {
         }
     }
 
-    @Override
-    public Vector getNormal(Point3D point) {
-        return _plane.getNormal(point);
+    /**
+     * Polycon Constructor receiving vertices and color
+     * @param emission
+     * @param vertices
+     */
+    public Polygon(Color emission, Point3D... vertices) {
+        this(vertices);
+        this._emission = emission;
+    }
+
+    public Polygon(Color emission, Material _material, Point3D... vertices) {
+        this(emission,vertices);
+        this._material = _material;
     }
 
 
-    public List<Point3D> findIntersections(Ray ray) {
-        return null;
+    @Override
+    public Vector getNormal(Point3D point) {
+        return _plane.getNormal();
+    }
+
+    @Override
+    public List<GeoPoint> findIntersections(Ray ray) {
+        List<GeoPoint> intersection = _plane.findIntersections(ray);
+        if (intersection == null) return null;
+
+        Point3D p0 = ray.get_P0();
+        Vector v = ray.get_direction();
+
+        Vector v1 = _vertices.get(1).subtract(p0);
+        Vector v2 = _vertices.get(0).subtract(p0);
+
+        double sign = v.dotProduct(v1.crossProduct(v2));
+        if (isZero(sign)) return null;
+
+        boolean positive = sign > 0;
+        for (int i = _vertices.size() - 1; i > 0; --i) {
+            v1 = v2;
+            v2 = _vertices.get(i).subtract(p0);
+            sign = alignZero(v.dotProduct(v1.crossProduct(v2)));
+            if (isZero(sign)) return null;
+            if (positive != (sign > 0)) return null;
+        }
+
+        intersection.get(0).geometry = this;
+        return intersection;
+
+
     }
 }

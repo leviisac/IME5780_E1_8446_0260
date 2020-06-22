@@ -5,9 +5,7 @@
 
 package geometries;
 
-import primitives.Ray;
-import primitives.Point3D;
-import primitives.Vector;
+import primitives.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,7 +14,12 @@ import java.util.Objects;
 import static primitives.Util.alignZero;
 
 
-//this class represent a sphere
+/**
+ * sphere class represents sphere in 3D Cartesian coordinate
+ * for represents a sphere 3D Cartesian we need radius and point 3D
+ *
+ * @author levi and david
+ */
 
 
 public class Sphere extends RadialGeometry{
@@ -26,14 +29,38 @@ public class Sphere extends RadialGeometry{
     private Point3D _center;
 
     // ***************** Constructors ********************** //
+    /**
+     * this is a basic constructor it receives two param radius and center
+     *
+     * @param emission
+     * @param radius - the radius of the sphere
+     * @param center - point 3d that his the location of the sphere
+     */
+    public Sphere(Color emission, double radius, Point3D center) {
+        this(radius,center);
+        this._emission = emission;
+    }
 
-    //copy constructor (receive one sphere and copy your values to ""this.sphere"")
+    public Sphere(Color _emissionLight, Material _material, double _radius, Point3D _center) {
+        this(_emissionLight,_radius,_center);
+        this._material = _material;
+    }
+    /**
+     * this is a basic copy  constructor it receives an sphere and copy to our sphere the radius and the center
+     *
+     * @param sphere
+     */
     public Sphere (Sphere sphere){this(sphere._radius,sphere._center);}
 
-    //constructor that receive the radius and the center point of the sphere and initializing the radius and the center point
+    /**
+     * this is a basic constructor it receives two param radius and center
+     *
+     * @param radius - the radius of the sphere
+     * @param center - point 3d that his the location of the sphere
+     */
     public Sphere(double radius, Point3D center){
-        super();
-        this._radius=radius;this._center=center;
+        super(radius);
+        this._center=center;
     }
 
 
@@ -62,7 +89,7 @@ public class Sphere extends RadialGeometry{
      * @return a list of all intersection
      */
 
-    public List<Point3D> findIntersections(Ray ray) {
+    public List<GeoPoint>  findIntersections(Ray ray) {
         Point3D p0 = ray.get_P0();
         Vector v = ray.get_direction();
         Vector u;
@@ -70,7 +97,7 @@ public class Sphere extends RadialGeometry{
         try {
             u = _center.subtract(p0);
         } catch (IllegalArgumentException e) {
-            return List.of(ray.getTargetPoint(_radius));
+            return List.of(new GeoPoint(this,ray.getTargetPoint(_radius)));
         }
         //tm=v*u the distance between p0 and the point with makes 90 degrees with the center
         double tm = alignZero(v.dotProduct(u));
@@ -93,14 +120,21 @@ public class Sphere extends RadialGeometry{
         if (t1 <= 0 && t2 <= 0) return null;
 
         if (t1 > 0 && t2 > 0)
-            return List.of(ray.getTargetPoint(t1), ray.getTargetPoint(t2)); //P1 , P2
+            return List.of(new GeoPoint(this, (ray.getTargetPoint(t1)))
+                    ,new GeoPoint(this, (ray.getTargetPoint(t2)))); //P1 , P2
         if (t1 > 0)
-            return List.of(ray.getTargetPoint(t1)); //just one point
+            return List.of(new GeoPoint(this,(ray.getTargetPoint(t1)))); //just one point
         if (t2 > 0)
-            return List.of(ray.getTargetPoint(t2));
+            return List.of(new GeoPoint(this,(ray.getTargetPoint(t2))));
         return null;
     }
 
+    /***
+     * check if the given sphere is equal to our sphere
+     *
+     * @param o
+     * @return
+     */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

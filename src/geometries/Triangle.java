@@ -6,127 +6,105 @@
 
 package geometries;
 
-import primitives.Point3D;
-import primitives.Ray;
-import primitives.Vector;
+import primitives.*;
 
-import java.awt.*;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 import static primitives.Util.isZero;
 
+/**
+ * class Triangle represents a triangle in 3D cartesian coordinate system
+ * @author levi and david
+ */
 public class Triangle extends Polygon {
-
-    Point3D _p1;//the first point of the triangle
-    Point3D _p2;//the second point of the triangle
-    Point3D _p3;//the third point of the triangle
-
-
     // ***************** Constructors ********************** //
-    //constructor that receive tree points and Initializing the tree point of the triangle with their values
-    public Triangle(Point3D p1, Point3D p2, Point3D p3)
-    {
-         super(p1,p2,p3);
-        _p1=new Point3D(p1);
-        _p2=new Point3D(p2);
-        _p3=new Point3D(p3);
-    }
-
-
-    //copy constructor (receive a triangle and copy your values to ""this.Triangle"")
-    public Triangle(Triangle copy) {
-        this._p1 = new Point3D(copy._p1);
-        this._p2 = new Point3D(copy._p2);
-        this._p3 = new Point3D(copy._p3);
-    }
-
-
-
-// ***************** Getters ********************** //
-
-
-    public Point3D getP1() {
-        return new Point3D(_p1);
-    }//return a new Point3D with the value of this._p1
-    public Point3D getP2() {
-        return new Point3D(_p2);
-    }//return a new Point3D with the value of this._p2
-    public Point3D getP3() {return new Point3D(_p3);  }//return a new Point3D with the value of this._p3
-
-
-
 
 
     /**
-     * @param ray - he his the ray that insert the object
-     * @return list of Intersections
+     * Triangle Constructor receiving three points
+     *
+     * @param p1 first
+     * @param p2 second
+     * @param p3 third
      */
+    public Triangle(Point3D p1, Point3D p2, Point3D p3) {
+        super(p1, p2, p3);
+    }
+
+    /**
+     * @param emissionLight
+     * @param p1
+     * @param p2
+     * @param p3
+     */
+    public Triangle(Color emissionLight, Point3D p1, Point3D p2, Point3D p3) {
+        super(p1, p2, p3);
+        this._emission = emissionLight;
+    }
+
+    /**
+     * @param emissionLight
+     * @param material
+     * @param p1
+     * @param p2
+     * @param p3
+     */
+    public Triangle(Color emissionLight, Material material, Point3D p1, Point3D p2, Point3D p3) {
+        super(emissionLight, p1, p2, p3);
+        this._material = material;
+    }
+
+
+
+    // ***************** Operations ******************** //
+
     @Override
-    public List<Point3D> findIntersections(Ray ray) {
-        List<Point3D> intersections = _plane.findIntersections(ray);
-        if (intersections == null) return null;
+    public List<GeoPoint> findIntersections(Ray ray) {
+        if (_plane.findIntersections(ray) == null) return null;
+        List<GeoPoint> planeIntersections = _plane.findIntersections(ray);
+
 
         Point3D p0 = ray.get_P0();
         Vector v = ray.get_direction();
-        //we creat the tree vector
-        Vector v1 = _vertices.get(0).subtract(p0);
-        Vector v2 = _vertices.get(1).subtract(p0);
-        Vector v3 = _vertices.get(2).subtract(p0);
 
-        double side1 = v.dotProduct(v1.crossProduct(v2));
-        if (isZero(side1)) return null;
-        double side2 = v.dotProduct(v2.crossProduct(v3));
-        if (isZero(side2)) return null;
-        double side3 = v.dotProduct(v3.crossProduct(v1));
-        if (isZero(side3)) return null;
+        Vector v1 = _vertices.get(0).subtract(ray.get_P0());
+        Vector v2 = _vertices.get(1).subtract(ray.get_P0());
+        Vector v3 = _vertices.get(2).subtract(ray.get_P0());
 
-        if ((side1 > 0 && side2 > 0 && side3 > 0) || (side1 < 0 && side2 < 0 && side3 < 0)) return intersections;
+
+        double d1 = v.dotProduct(v1.crossProduct(v2));
+        if (Util.isZero(d1)) return null;
+        double d2 = v.dotProduct(v2.crossProduct(v3));
+        if (Util.isZero(d2)) return null;
+        double d3 = v.dotProduct(v3.crossProduct(v1));
+        if (Util.isZero(d3)) return null;
+
+        // if the intersection is inside triangle
+        if ((d1 > 0.0 && d2 > 0.0 && d3 > 0.0) || (d1 < 0.0 && d2 < 0.0 && d3 < 0.0)) {
+            List<GeoPoint> result = new ArrayList<>();
+            for (GeoPoint geo : planeIntersections) {
+                result.add(new GeoPoint(this, geo.getPoint()));
+            }
+            result.get(0).geometry = this;
+            return result;
+        }
 
         return null;
     }
 
-
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
-        Triangle other = (Triangle) obj;
-        if (_p1 == null) {
-            if (other._p1 != null)
-                return false;
-        } else if (!_p1.equals(other._p1))
-            return false;
-        if (_p2 == null) {
-            if (other._p2 != null)
-                return false;
-        } else if (!_p2.equals(other._p2))
-            return false;
-        if (_p3 == null) {
-            if (other._p3 != null)
-                return false;
-        } else if (!_p3.equals(other._p3))
-            return false;
-        return true;
-    }
-
+    // ***************** Administration  ******************** //
 
     @Override
     public String toString() {
-        return "Triangle{" +
-                "_p1=" + _p1 +
-                ", _p2=" + _p2 +
-                ", _p3=" + _p3 +
-                '}';
+        String result = "";
+        for (Point3D p : _vertices) {
+            result += p.toString();
+        }
+        return result;
     }
-
-
 
 
 

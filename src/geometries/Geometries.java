@@ -7,6 +7,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+/***
+ * this class hold an list for the intersection of a group of geometries
+ * @author levi and david
+ */
+
 public class Geometries implements Intersectable {
     List<Intersectable> intersectableList = new ArrayList<>();
 
@@ -38,23 +43,22 @@ public class Geometries implements Intersectable {
      * @param ray
      */
     @Override
-    public List<Point3D> findIntersections(Ray ray) {
 
-        if (intersectableList.isEmpty())
-            return null;
+    public List<GeoPoint> findIntersections(Ray ray) {
 
-        List<Point3D> intersections = null;
+        if (intersectableList.isEmpty()) return null;
+        List<GeoPoint> intersections = null;
+
 
         for (Intersectable geo : intersectableList) {
-            List<Point3D> tempIntersections = geo.findIntersections(ray);
+            List<GeoPoint> tempIntersections = geo.findIntersections(ray);
             if (tempIntersections != null) {
                 if (intersections == null)
-                    intersections = new ArrayList<Point3D>();
+                    intersections = new ArrayList<>();
                 intersections.addAll(tempIntersections);
             }
         }
         return intersections;
     }
-
 
 }

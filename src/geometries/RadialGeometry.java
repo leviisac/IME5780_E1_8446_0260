@@ -1,22 +1,28 @@
 package geometries;
 
 
-//classe responsável por circunferências
-public abstract class RadialGeometry implements Geometry {
+/***
+ * classe responsável por circunferências
+ * @author levi and david
+ */
+public abstract class RadialGeometry extends Geometry {
 
-    protected double _radius;//the radius
+    double  _radius;
 
-    //constructor that receive a double and put him to be the value of _radius
-    public RadialGeometry(double radius){this._radius = radius;}
+    /**
+     * RadialGeometry Constructor receiving radius
+     * @param _radius
+     */
+    public RadialGeometry(double _radius) {
+        this._radius = _radius;
+    }
+
 
     //copy constructor
     public RadialGeometry(RadialGeometry geo){
         this._radius=geo.getRadius();
     }
 
-    public RadialGeometry() {
-
-    }
 
 
     public double getRadius(){return this._radius;}//return the _radius

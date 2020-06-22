@@ -1,7 +1,7 @@
 package unittests.elements;
 
 import static org.junit.Assert.*;
-
+import geometries.Intersectable.GeoPoint;
 import org.junit.Test;
 
 import elements.Camera;

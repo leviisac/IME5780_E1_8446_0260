@@ -5,9 +5,7 @@
 
 
 package geometries;
-import primitives.Ray;
-import primitives.Point3D;
-import primitives.Vector;
+import primitives.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,8 +14,9 @@ import static primitives.Util.alignZero;
 
 /**
  * class plane represents a plane in 3D cartesian coordinate system
+ * @author levi and david
  */
-public class Plane implements Geometry {
+public class Plane extends Geometry {
      Vector _vec;//the vector that is part of the plane
     private Point3D _Q;//the point that is part of the plane
 
@@ -37,8 +36,8 @@ public class Plane implements Geometry {
         Vector V = new Vector(p1, p3);
         Vector N = U.crossProduct(V);
         N.normalize();
-
-        _vec = N.scale(-1);
+        _vec=N;
+        //_vec = N.scale(-1);
 
     }
 
@@ -51,6 +50,22 @@ public class Plane implements Geometry {
     public Plane(Vector normal, Point3D q) {
         this._vec = normal;
         this._Q = q;
+    }
+
+    /**
+     * Plane Constructor receiving a point, normal vector and color
+     * @param _emissionLight
+     * @param _p
+     * @param _normal
+     */
+    public Plane(Color _emissionLight, Point3D _p, Vector _normal) {
+        this(_normal,_p);
+        this._emission = _emissionLight;
+    }
+
+    public Plane(Color _emissionLight, Material _material, Point3D _p, Vector _normal) {
+        this(_emissionLight,_p,_normal);
+        this._material = _material;
     }
 
 
@@ -80,9 +95,11 @@ public class Plane implements Geometry {
      * @return the normal vector computed in the specific point
      */
   @Override
-    public Vector getNormal(Point3D p) {
-        return _vec;
-    }
+  public Vector getNormal(Point3D p) {
+      return _vec;
+  }
+
+
 
 
     /**
@@ -91,7 +108,7 @@ public class Plane implements Geometry {
      * @return the vector normal to the plane
      */
     public Vector getNormal() {
-        return _vec;
+        return getNormal(null);
     }
 
 
@@ -125,7 +142,7 @@ public class Plane implements Geometry {
      * @return a list of all intersection
      */
 
-   public List<Point3D> findIntersections(Ray ray) {
+   public List<GeoPoint>  findIntersections(Ray ray) {
         Vector pq0;
         try {
             pq0 = _Q.subtract(ray.get_P0());
@@ -144,7 +161,7 @@ public class Plane implements Geometry {
         if (t <= 0)
             return null;
 
-        return List.of(ray.getTargetPoint(t));
+        return List.of(new GeoPoint(this, ray.getTargetPoint(t)));
     }
 
     @Override

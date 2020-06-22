@@ -12,6 +12,11 @@ import primitives.Vector;
 
 import java.util.List;
 
+/***
+ * class represents a tube
+ * @author levi and david
+ */
+
 public class Tube extends RadialGeometry{
     private Ray _ray;
 
@@ -62,7 +67,7 @@ public class Tube extends RadialGeometry{
      * @return a list of all intersection
      */
     @Override
-    public List<Point3D> findIntersections(Ray ray) {
+    public List<GeoPoint> findIntersections(Ray ray) {
         return null;
     }
 

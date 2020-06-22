@@ -6,6 +6,8 @@ package primitives;
  * this class represent a ray :
  * A ray is a part of a line that begins at a particular point
  * (called the endpoint) and extends endlessly in one direction
+ *
+ * @author levi and david
  */
 public class Ray {
 

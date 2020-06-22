@@ -12,6 +12,11 @@ import static org.junit.Assert.*;
 
 import static primitives.Util.isZero;
 
+/***
+ * class for test the vector class
+ *
+ *
+ */
 public class VectorTest {
 
 /**

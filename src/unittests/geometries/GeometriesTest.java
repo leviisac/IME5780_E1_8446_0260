@@ -1,4 +1,4 @@
-package unittests;
+package unittests.geometries;
 
 import geometries.*;
 import primitives.*;
@@ -9,6 +9,10 @@ import java.util.List;
 
 import static org.junit.Assert.*;
 
+/***
+ *tests for geometries
+ * @author levi and david
+ */
 public class GeometriesTest {
 
     /**

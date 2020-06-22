@@ -2,6 +2,7 @@ package unittests.elements;
 
 import elements.Camera;
 import geometries.Intersectable;
+import geometries.Intersectable.GeoPoint;
 import geometries.Plane;
 import geometries.Sphere;
 import geometries.Triangle;
@@ -18,7 +19,7 @@ import static org.junit.Assert.assertNull;
 /**
  * we test the Intersection between package geometry and ray to the camera in 3D Cartesian coordinate
  *
- * @author levi
+ * @author levi and david
  */
 public class IntersectionTest {
     Camera cam1 = new Camera(Point3D.ZERO, new Vector(0, 0, 1), new Vector(0, -1, 0));
@@ -32,7 +33,7 @@ public class IntersectionTest {
      * @param cam      the camera to generate the rays from
      */
     private void intersections(Intersectable geometry, int expected, Camera cam) {
-        List<Point3D> results = null;
+        List<GeoPoint>results = null;
         int count = 0;
         //w X h--- 3 X 3
         int Nx = 3;

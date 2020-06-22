@@ -1,11 +1,14 @@
 package primitives;
 
 /**
+ *
+ * this class represent a point for 3 dimensions X, Y and Z
+ *
  * Created by Levi isack eliezer and David benathar.
  * 988446 and 100260
  */
 
-//  this class represent a point for 3 dimensions X, Y and Z
+
 public class Point3D  {
     Coordinate _x;
     Coordinate _y;

@@ -3,8 +3,13 @@ package elements;
 
 import primitives.Color;
 
-public class AmbientLight {
-    private Color _intensity;
+
+/**
+ * class for the ambient light in the scene
+ * @author levi and david
+ */
+public class AmbientLight extends Light {
+
 
     /**
      *the func refill light
@@ -12,9 +17,7 @@ public class AmbientLight {
      * @param ka-promotes light refill
      */
     public  AmbientLight(Color ia, double ka) {
-        this._intensity = ia.scale(ka);
+        super(ia.scale(ka));
     }
-    public Color getIntensity() {
-        return _intensity;
-    }
+
 }
