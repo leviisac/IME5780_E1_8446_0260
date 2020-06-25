@@ -109,11 +109,10 @@ public class Point3D  {
         return Math.sqrt(distanceSquared(point));
     }
 
-    public double distanceSquared(Point3D other)
-    {
-        return ( (other._x._coord - this._x._coord) * (other._x._coord - this._x._coord) +
-                (other._y._coord - this._y._coord) * (other._y._coord - this._y._coord) +
-                (other._z._coord - this._z._coord) * (other._z._coord - this._z._coord));
+    public double distanceSquared (Point3D p){
+        return (this._x._coord - p._x._coord) * (this._x._coord - p._x._coord)
+                + (this._y._coord - p._y._coord) * (this._y._coord - p._y._coord)
+                + (this._z._coord - p._z._coord) * (this._z._coord - p._z._coord);
     }
 }
 

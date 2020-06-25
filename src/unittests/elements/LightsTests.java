@@ -47,7 +47,7 @@ public class LightsTests {
         scene.setCamera(new Camera(new Point3D(0, 0, -1000), new Vector(0, 0, 1), new Vector(0, -1, 0)));
         scene.setDistance(1000);
         scene.setBackground(Color.BLACK);
-        scene.setAmbientLight(new AmbientLight(Color.BLACK, 0));
+        scene.setAmbientLight(new AmbientLight(new Color(255,255,255), 1));
 
         scene.addGeometries(
                 new Sphere(new Color(java.awt.Color.BLUE), new Material(0.5, 0.5, 100), 50, new Point3D(0, 0, 50)));
@@ -78,7 +78,7 @@ public class LightsTests {
         scene.addLights(
                 new SpotLight(new Color(500, 300, 0),
                 new Point3D(-50, 50, -50),
-                1, 0.00001, 0.00000001,new Vector(1, -1, 2))
+                2, 0.001, 0.000001,new Vector(1, -1, 2))
         );
 
         ImageWriter imageWriter = new ImageWriter("sphereSpot", 150, 150, 500, 500);
@@ -176,7 +176,7 @@ public class LightsTests {
         scene.addLights(
                 new SpotLight(new Color(500, 250, 250),
                         new Point3D(10, 10, 130),
-                        1, 0.0001, 0.000005,new Vector(-2, 2, 1)));
+                        2, 0.001, 0.000001,new Vector(-2, 2, 1)));
 
         ImageWriter imageWriter = new ImageWriter("trianglesSpot", 200, 200, 500, 500);
         Render render = new Render(imageWriter, scene);

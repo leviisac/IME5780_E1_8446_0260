@@ -26,12 +26,12 @@ public class RenderTests {
         scene.setCamera(new Camera(Point3D.ZERO, new Vector(0, 0, 1), new Vector(0, -1, 0)));
         scene.setDistance(100);
         scene.setBackground(new Color(75, 127, 90));
-        scene.setAmbientLight(new AmbientLight(new Color(255, 191, 191), 1));
+        scene.setAmbientLight(new AmbientLight(new Color(255, 255, 255), 1));
 
         scene.addGeometries(new Sphere(50, new Point3D(0, 0, 100)));
 
         scene.addGeometries(
-                new Triangle(new Point3D(100, 0, 100), new Point3D(0, 100, 100), new Point3D(100, 100, 100)),
+                new Triangle(new Color(255,0,0),new Material(0,0,0),new Point3D(100, 0, 100), new Point3D(0, 100, 100), new Point3D(100, 100, 100)),
                 new Triangle(new Point3D(100, 0, 100), new Point3D(0, -100, 100), new Point3D(100, -100, 100)),
                 new Triangle(new Point3D(-100, 0, 100), new Point3D(0, 100, 100), new Point3D(-100, 100, 100)),
                 new Triangle(new Point3D(-100, 0, 100), new Point3D(0, -100, 100), new Point3D(-100, -100, 100)));

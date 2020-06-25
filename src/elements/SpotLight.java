@@ -12,7 +12,9 @@ import primitives.Vector;
 public class SpotLight extends PointLight {
 
 
-     protected Vector _direction;
+
+
+    protected Vector _direction;
 
     /**
      * Initialize the vector of direction of the spot light
@@ -37,18 +39,18 @@ public class SpotLight extends PointLight {
     @Override
     public Color getIntensity(Point3D p) {
 
-        double dSquared = p.distanceSquared(_position);
-        double d = p.distance(_position);
-
         Vector vector;
         if(p.subtract(_position).normalized() == null)
             vector = new Vector(_direction);
         else
             vector = p.subtract(_position).normalized();
 
-        return (_intensity.scale(Math.max(0,_direction.dotProduct(vector)))
-                .reduce(_kC + _kL * d + _kQ * dSquared));
+
+        return super.getIntensity(p).scale(Math.max(0,_direction.dotProduct(vector)));
 
     }
+
+
+
 
 }
