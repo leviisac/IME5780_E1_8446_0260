@@ -47,7 +47,7 @@ public class LightsTests {
         scene.setCamera(new Camera(new Point3D(0, 0, -1000), new Vector(0, 0, 1), new Vector(0, -1, 0)));
         scene.setDistance(1000);
         scene.setBackground(Color.BLACK);
-        scene.setAmbientLight(new AmbientLight(new Color(255,255,255), 1));
+        scene.setAmbientLight(new AmbientLight(new Color(255,255,255), 0.15));
 
         scene.addGeometries(
                 new Sphere(new Color(java.awt.Color.BLUE), new Material(0.5, 0.5, 100), 50, new Point3D(0, 0, 50)));

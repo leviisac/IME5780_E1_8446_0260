@@ -8,6 +8,8 @@ public class Material {
     double _kD;
     double _kS;
     int nShininess; //brilho
+    double _kT; // k transparency
+    double _kR; // k reflection
 
     public final static Material DEFAULT = new Material(0d,0d,0);
     /**
@@ -23,6 +25,24 @@ public class Material {
         this.nShininess = nShininess;
     }
 
+
+    /**
+     * Constructor with transparency and reflection parameters
+     *
+     * @param _kD
+     * @param _kS
+     * @param _nShininess
+     * @param _kT
+     * @param _kR
+     */
+    public Material(double _kD, double _kS, int _nShininess, double _kT, double _kR){
+        this._kD = _kD;
+        this._kS = _kS;
+        this.nShininess = _nShininess;
+        this._kT = _kT;
+        this._kR = _kR;
+
+    }
     /**
      * @return _kD
      */
@@ -43,5 +63,13 @@ public class Material {
      */
     public int getnShininess() {
         return nShininess;
+    }
+
+    public double get_kT() {
+        return _kT;
+    }
+
+    public double get_kR() {
+        return _kR;
     }
 }

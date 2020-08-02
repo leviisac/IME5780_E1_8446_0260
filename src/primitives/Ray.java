@@ -14,6 +14,7 @@ public class Ray {
 
     private Point3D _P0;
     private Vector _direction;
+    private static final double DELTA = 0.1;
 
 
      /****************** Constructors ********************** //
@@ -40,6 +41,15 @@ public class Ray {
     }
 
 
+    public Ray(Point3D point, Vector direction, Vector normal) {
+        // head + normal.scale(+-DELTA)
+        _direction = new Vector(direction).normalized();
+
+        double nv = normal.dotProduct(direction);
+
+        Vector normalDelta = normal.scale((nv > 0 ? DELTA : -DELTA));
+        _P0 = point.add(normalDelta);
+    }
 
     /**
      * ***************** Getters/Setters ********************** //

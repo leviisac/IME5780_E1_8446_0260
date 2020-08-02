@@ -31,6 +31,14 @@ public abstract class Util {
         return getExp(number) < ACCURACY;
     }
 
+
+    /**
+     * Checks whether the number is [almost] one
+     * @param number
+     * @return true if the number is one or almost one, false otherwise
+     */
+    public static boolean isOne(double number) { return getExp(number - 1) < ACCURACY; }
+
     /**
      * Aligns the number to zero if it is almost zero
      * 

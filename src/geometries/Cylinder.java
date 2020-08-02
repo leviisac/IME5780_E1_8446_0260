@@ -6,9 +6,10 @@
 
 package geometries;
 
-import primitives.Point3D;
-import primitives.Ray;
-import primitives.Vector;
+import primitives.*;
+
+import java.util.LinkedList;
+import java.util.List;
 
 import static primitives.Util.isZero;
 
@@ -31,6 +32,17 @@ public class Cylinder extends Tube {
         if (height <= 0)    //if the radius equal on small to zero so we don't can't have a cylinder so his return IllegalArgumentException
             throw new IllegalArgumentException("height must be equal or superior to zero.");
         this._height = height;
+    }
+
+
+    public Cylinder(Color _emissionLight, double _radius, Ray _axisRay, double _height) {
+        this(_axisRay,_radius,_height);
+        this._emission = _emissionLight;
+    }
+
+    public Cylinder(Color _emissionLight, Material _material, double _radius, Ray _axisRay, double _height) {
+        this(_emissionLight, _radius, _axisRay, _height);
+        this._material = _material;
     }
 
     /**
@@ -78,5 +90,19 @@ public class Cylinder extends Tube {
 
         p0 = p0.add(v.scale(t));
         return point.subtract(p0).normalize();
+    }
+
+
+    @Override
+    public List<GeoPoint> findIntersections(Ray ray) {
+        List<GeoPoint> intersections = super.findIntersections(ray);  // to return the intersection points
+        List<GeoPoint> result = new LinkedList<>();
+        if (intersections != null) {
+            for (GeoPoint geoPoint : intersections) {
+                result.add(new GeoPoint(this, geoPoint.getPoint()));
+            }
+            return result;
+        }
+        return null;
     }
 }
