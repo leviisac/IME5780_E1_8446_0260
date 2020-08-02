@@ -32,10 +32,10 @@ public class LightsTests {
 
         scene.addLights(new DirectionalLight(new Color(500, 300, 0), new Vector(1, -1, 1)));
 
-        ImageWriter imageWriter = new ImageWriter("sphereDirectional", 150, 150, 500, 500);
+        ImageWriter imageWriter = new ImageWriter("sphereDirectional2", 150, 150, 500, 500);
         Render render = new Render(imageWriter, scene);
 
-        render.renderImage();
+        render.renderImage(false);
         render.writeToImage();
     }
     /**
@@ -57,7 +57,7 @@ public class LightsTests {
         ImageWriter imageWriter = new ImageWriter("spherePoint", 150, 150, 500, 500);
         Render render = new Render(imageWriter, scene);
 
-        render.renderImage();
+        render.renderImage(false);
         render.writeToImage();
     }
 
@@ -84,7 +84,7 @@ public class LightsTests {
         ImageWriter imageWriter = new ImageWriter("sphereSpot", 150, 150, 500, 500);
         Render render = new Render(imageWriter, scene);
 
-        render.renderImage();
+        render.renderImage(false);
         render.writeToImage();
     }
 
@@ -112,7 +112,7 @@ public class LightsTests {
         ImageWriter imageWriter = new ImageWriter("trianglesDirectional", 200, 200, 500, 500);
         Render render = new Render(imageWriter, scene);
 
-        render.renderImage();
+        render.renderImage(false);
         render.writeToImage();
     }
 
@@ -140,7 +140,7 @@ public class LightsTests {
         ImageWriter imageWriter = new ImageWriter("trianglesPoint", 200, 200, 500, 500);
         Render render = new Render(imageWriter, scene);
 
-        render.renderImage();
+        render.renderImage(false);
         render.writeToImage();
     }
 
@@ -181,7 +181,7 @@ public class LightsTests {
         ImageWriter imageWriter = new ImageWriter("trianglesSpot", 200, 200, 500, 500);
         Render render = new Render(imageWriter, scene);
 
-        render.renderImage();
+        render.renderImage(false);
         render.writeToImage();
     }
 

@@ -39,7 +39,7 @@ public class RenderTests {
         ImageWriter imageWriter = new ImageWriter("base render test", 500, 500, 500, 500);
         Render render = new Render(imageWriter, scene);
 
-        render.renderImage();
+        render.renderImage(false);
         render.printGrid(50, java.awt.Color.YELLOW);
         render.writeToImage();
     }
@@ -67,7 +67,7 @@ public class RenderTests {
         ImageWriter imageWriter = new ImageWriter("color render test", 500, 500, 500, 500);
         Render render = new Render(imageWriter, scene);
 
-        render.renderImage();
+        render.renderImage(false);
         render.printGrid(50, java.awt.Color.WHITE);
         render.writeToImage();
     }

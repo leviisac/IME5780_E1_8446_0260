@@ -24,7 +24,7 @@ public class Camera {
     Vector _vup;
     Vector _vright;
     // number of rows and columns in one pixel for supersampling
-    private static final int SUPERSAMPLING_NUM = 9;
+    private static final int SUPERSAMPLING_NUM = 15;
     /**
      * @param p0-the  place of the camera
      * @param vto-where the vector point outgoing from the camera
@@ -91,7 +91,7 @@ public class Camera {
         return new Ray(_p0, vIJ.normalize());
     }
     /**
-     * Construct ray through pixel for super sampling method (realization by Jitter)
+     * Construct ray through pixel for super sampling method 
      *
      * @param nX
      * @param nY

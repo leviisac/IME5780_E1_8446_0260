@@ -60,7 +60,7 @@ public class Render {
      *  Throws rays through the all pixels and for each ray - if it's got
      *  intersection points with the shapes of the scene - paints the closest point
      */
-    public void renderImage() {
+    public void renderImage(boolean  anti_aliasing) {
         Camera camera = _scene.getCamera();
         Intersectable geometries = _scene.getGeometries();
         java.awt.Color background = _scene.getBackground().getColor();
@@ -74,27 +74,58 @@ public class Render {
         double height = _imageWriter.getHeight();
 
         double distance = _scene.getDistance();
+        if (anti_aliasing){
+            for (int row = 0; row < nY; ++row)
+                for (int column = 0; column < nX; ++column) {
+                    Ray ray = camera.constructRayThroughPixel(nX, nY, column, row, distance, width, height);
+                    GeoPoint closestPoint = findClosestIntersection(ray);
 
-
-        for (int row = 0; row < nY; ++row)
-            for (int column = 0; column < nX; ++column) {
-                Ray ray = camera.constructRayThroughPixel(nX,nY,column,row,distance,width,height);
-                List<GeoPoint> intersectionPoints = geometries.findIntersections(ray);
-                // List<GeoPoint> intersectionPoints = geometries.findIntersections(camera.constructRayThroughPixel(nX, nY, column, row, distance, width, height));
-
-                if(intersectionPoints == null)
-                    _imageWriter.writePixel(column,row,background);
-                else {
-                    GeoPoint closestPoint = getClosestPoint(intersectionPoints);
-                    _imageWriter.writePixel(column,row,closestPoint == null ? background : calcColor(closestPoint, ray).getColor());
-
+                    List<Ray> rayList = camera.constructBeamThroughPixel(nX, nY, column, row, distance, width, height);
+                    _imageWriter.writePixel(column, row, closestPoint == null ? background : averageColor(rayList).getColor());
                 }
+    }
+    else{
 
+    for (int row = 0; row < nY; ++row)
+        for (int column = 0; column < nX; ++column) {
+            Ray ray = camera.constructRayThroughPixel(nX,nY,column,row,distance,width,height);
+            GeoPoint closestPoint = findClosestIntersection(ray);
+            _imageWriter.writePixel(column,row,closestPoint == null ? background : calcColor(closestPoint, ray).getColor());
 
+        }
             }
 
     }
 
+
+    /**
+     * Calculate the average of a color in a pixel
+     *
+     * @param rayBeam
+     * @return
+     */
+    private Color averageColor(List<Ray> rayBeam){
+        java.awt.Color background = _scene.getBackground().getColor();
+        Color color = new Color(0,0,0);
+        for(Ray ray : rayBeam){
+            color = findClosestIntersection(ray) == null ? color.add(_scene.getBackground())
+                    : color.add(calcColorAdvanced(findClosestIntersection(ray),ray));
+        }
+
+        return color.reduce(rayBeam.size());
+    }
+    /**
+     * Calculates reflected color on point according to Phong model.
+     * Calls for recursive helping function.
+     *
+     * @param geopoint
+     * @param inRay
+     * @return
+     */
+    private Color calcColorAdvanced(GeoPoint geopoint, Ray inRay) {
+        return calcColor(geopoint, inRay, MAX_CALC_COLOR_LEVEL, 1.0).add(
+                _scene.getAmbientLight().getIntensity());
+    }
 
     /**
      *  Prints grid for the background of the image for test
