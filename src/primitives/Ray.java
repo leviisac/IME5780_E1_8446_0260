@@ -1,6 +1,7 @@
 package primitives;
 
 
+import static primitives.Util.isZero;
 
 /**
  * this class represent a ray :
@@ -37,7 +38,6 @@ public class Ray {
     public Ray(Point3D _P0, Vector _direction) {
         this.set_P0(_P0);
         this.set_direction(_direction);
-        this._direction.normalize();
     }
 
 
@@ -60,12 +60,14 @@ public class Ray {
     }
 
     public Point3D get_P0() {
-        return new Point3D(_P0);
+//        return new Point3D(_P0);
+        return _P0;
 
     }
 
     public void set_direction(Vector _direction) {
-        this._direction = new Vector(_direction);
+        //this._direction = new Vector(_direction);
+        this._direction = _direction.normalized();
     }
 
     /**
@@ -75,7 +77,7 @@ public class Ray {
      */
 
     public Point3D getTargetPoint(double distance) {
-        return _P0.add(_direction.scale(distance));
+        return isZero(distance ) ? _P0 : _P0.add(_direction.scale(distance));
     }
 
     public Vector get_direction() {

@@ -10,6 +10,8 @@ import primitives.*;
 
 import java.util.List;
 
+import static primitives.Util.isZero;
+
 /***
  * class represents a tube
  * @author levi and david
@@ -69,14 +71,22 @@ public class Tube extends RadialGeometry{
      */
     @Override
     public Vector getNormal(Point3D point) {
-        // distance from axis start to the projection of the point onto axis
-        double scaleNumber = _ray.get_direction().dotProduct(point.subtract(_ray.get_P0()));
-        // he found the point on the border of the tube  0
-        Point3D o = _ray.get_P0().add(_ray.get_direction().scale(scaleNumber));
-        // the normal of tube his the point on the border of the tub minus the central (p0-0)
-        Vector normal_tube = point.subtract(o);
-        //rerun normal tube vector in size one
-        return normal_tube.normalize();
+        //The vector from the point of the cylinder to the given point
+        Point3D o = _ray.get_P0(); // at this point o = p0
+        Vector v = _ray.get_direction();
+
+        Vector vector1 = point.subtract(o);
+
+        //We need the projection to multiply the _direction unit vector
+        double projection = vector1.dotProduct(v);
+        if (!isZero(projection)) {
+            // projection of P-O on the ray:
+            o = o.add(v.scale(projection));
+        }
+
+        //This vector is orthogonal to the _direction vector.
+        Vector check = point.subtract(o);
+        return check.normalize();
     }
 
     /**
@@ -88,7 +98,7 @@ public class Tube extends RadialGeometry{
 
         //Given ray (A + ta)
         Point3D pointA = new Point3D(ray.get_P0());
-        Vector vectorA = new Vector(ray.get_P0());
+        Vector vectorA = new Vector(ray.get_direction());
 
         //Tube ray (B + tb)
         Point3D pointB = _ray.get_P0();

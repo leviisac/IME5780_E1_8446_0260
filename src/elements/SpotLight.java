@@ -32,6 +32,8 @@ public class SpotLight extends PointLight {
     }
 
 
+
+
     /**
      * @param p the lighted point
      * @return

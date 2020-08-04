@@ -11,6 +11,8 @@ import primitives.*;
 import renderer.*;
 import scene.Scene;
 
+import java.io.IOException;
+
 /**
  * Tests for reflection and transparency functionality, test for partial shadows
  * (with transparency)
@@ -145,11 +147,10 @@ public class ReflectionRefractionTests {
 	}
 
 
-	/**
-	 * Produce a picture of a many geometries lighted by a directional light with refraction and reflection
-	 */
+
+
 	@Test
-	public void coronaSphere() {
+	public void tubeTest() throws IOException {
 		Scene scene = new Scene("Test scene");
 		scene.setCamera(new Camera(
 				new Point3D(0, 0, -200),
@@ -159,41 +160,20 @@ public class ReflectionRefractionTests {
 		scene.setBackground(Color.BLACK);
 		scene.setAmbientLight(new AmbientLight(new Color(java.awt.Color.black), 0.1));
 
-
-		scene.addGeometries(new Plane(
-				new Color(java.awt.Color.black),
-				new Material(0,1,150,0.2,0.8),
-				new Point3D(0,0,110),
-				new Vector(0,-0.724,0.6896)
-		));
-
-		scene.addGeometries(new Plane(
-				new Color(29,25,37),
-				new Material(0,1,150,0.2,0.8),
-				new Point3D(0,0,110),
-				new Vector(-0.0453,-0.417,-0.907)
-		));
-
-		scene.addGeometries(new Sphere(
-				new Color(java.awt.Color.green),
-				new Material(0.5, 0.5, 100), 3.5,
-				new Point3D(-15, 0, 3)));
+		scene.addGeometries(
+				new Tube(
+						new Color(new Color(221, 160, 221)),
+						new Material(0.3, 0.3, 250), 2,
+						new Ray(new Point3D(0, 0, 5),
+								new Vector(2, 2, 2))));
 
 
 
 		//**********************************  The big sphere ************************************//
 
-		scene.addGeometries(
-				new Sphere(
-						new Color(java.awt.Color.BLUE),
-						new Material(0.5, 0.5, 100,0.6,0.4), 50,
-						new Point3D(0, 0, 50)));
-
-
-
 		scene.addLights(new DirectionalLight(new Color(255, 191, 191), new Vector(1, -1, 1)));
 
-		ImageWriter imageWriter = new ImageWriter("coronaSphere", 200, 200, 1500, 1500);
+		ImageWriter imageWriter = new ImageWriter("tubeTest", 200, 200, 500, 500);
 		Render render = new Render(imageWriter, scene);
 
 		render.renderImage(false);
