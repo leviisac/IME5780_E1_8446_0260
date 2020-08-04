@@ -91,7 +91,7 @@ public class Camera {
         return new Ray(_p0, vIJ.normalize());
     }
     /**
-     * Construct ray through pixel for super sampling method 
+     * Construct ray through pixel for super sampling method
      *
      * @param nX
      * @param nY
