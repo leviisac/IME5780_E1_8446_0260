@@ -285,8 +285,8 @@ public class ReflectionRefractionTests {
 				0.0004, 0.0000006,  new Vector(-1, 1, 2)));
 
 
-		ImageWriter imageWriter = new ImageWriter("finalTest", 150, 150, 500, 500);
-		Render render = new Render(imageWriter, scene);
+		ImageWriter imageWriter = new ImageWriter("finalTest", 150, 150, 100, 100 );
+		Render render = new Render(imageWriter, scene).setMultithreading(10).setDebugPrint();
 
 		render.renderImage(true);
 		render.writeToImage();

@@ -10,6 +10,7 @@ import primitives.Color;
 import scene.Scene;
 import renderer.ImageWriter;
 
+import java.util.Arrays;
 import java.util.List;
 
 import static primitives.Util.alignZero;
@@ -21,6 +22,10 @@ import static primitives.Util.alignZero;
  * @author levi and david
  */
 public class Render {
+
+    private int _threads = 1;
+    private final int SPARE_THREADS = 2; // Spare threads if trying to use all the cores
+    private boolean _print = false; // printing progress percentage
 
     private ImageWriter _imageWriter;
     private Scene _scene;
@@ -73,19 +78,29 @@ public class Render {
         double height = _imageWriter.getHeight();
 
         double distance = _scene.getDistance();
-        for (int row = 0; row < nY; ++row)
-            for (int column = 0; column < nX; ++column) {
+        final Pixel thePixel = new Pixel(nY, nX,_print); // Main pixel management object
+        Thread[] threads = new Thread[_threads];
 
-                Ray ray = camera.constructRayThroughPixel(nX, nY, column, row, distance, width, height);
-                GeoPoint closestPoint = findClosestIntersection(ray);
+        for (int i = _threads - 1; i >= 0; --i) { // create all threads
+            threads[i] = new Thread(() -> {
+                Pixel pixel = new Pixel(); // Auxiliary thread’s pixel object
+                while (thePixel.nextPixel(pixel)) {
+                    Ray ray = camera.constructRayThroughPixel(nX, nY, pixel.col, pixel.row, distance, width, height);
+                    GeoPoint closestPoint = findClosestIntersection(ray);
 
-                if (anti_aliasing) {
-                    List<Ray> rayList = camera.constructBeamThroughPixel(nX, nY, column, row, distance, width, height);
-                    _imageWriter.writePixel(column, row, closestPoint == null ? background : averageColor(rayList).getColor());
-                } else {
-                    _imageWriter.writePixel(column, row, closestPoint == null ? background : calcColor(closestPoint, ray).getColor());
-                }
-            }
+                    if (anti_aliasing) {
+                        List<Ray> rayList = camera.constructBeamThroughPixel(nX, nY, pixel.col, pixel.row, distance, width, height);
+                        _imageWriter.writePixel(pixel.col, pixel.row, closestPoint == null ? background : averageColor(rayList).getColor());
+                    } else {
+                        _imageWriter.writePixel(pixel.col, pixel.row, closestPoint == null ? background : calcColor(closestPoint, ray).getColor());
+                    }
+                }});
+        }
+        Arrays.stream(threads).forEach(Thread::start);// Start all the threads
+        // Wait for all threads to finish
+        Arrays.stream(threads).forEach(thread -> {try { thread.join(); } catch (Exception e) {}});// Start all the threads
+        if (_print) System.out.println("\r100%%\n"); // Print 100%
+
 
 
     }
@@ -433,4 +448,23 @@ public class Render {
         Vector r = v.subtract(n.scale(2 * vn));
         return new Ray(pointGeo, r, n);
     }
+
+    /**
+     * Set multithreading <br>
+     * - if the parameter is 0 - number of coress less SPARE (2) is taken
+     * @param threads number of threads
+     * @return the Render object itself
+     */
+    public Render setMultithreading(int threads) {
+        if (threads < 0) throw new IllegalArgumentException("Multithreading must be 0 or higher");
+        if (threads != 0) _threads = threads;
+        else {
+            int cores = Runtime.getRuntime().availableProcessors() - SPARE_THREADS;
+            _threads = cores <= 2 ? 1 : cores;
+        }
+        return this;
+    }
+
+    public Render setDebugPrint(){this._print = true; return this; }
+
 }
