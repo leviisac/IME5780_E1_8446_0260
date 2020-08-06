@@ -18,7 +18,7 @@ import static primitives.Util.isZero;
  */
 
 public class Tube extends RadialGeometry{
-    private Ray _ray;
+    public Ray _ray;
 
     /**
      * this is the basic constructor for a ray:

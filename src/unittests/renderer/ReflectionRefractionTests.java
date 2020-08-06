@@ -159,35 +159,13 @@ public class ReflectionRefractionTests {
 		scene.setBackground(Color.BLACK);
 		scene.setAmbientLight(new AmbientLight(new Color(java.awt.Color.black), 0.1));
 
-
-		scene.addGeometries(new Plane(
-				new Color(java.awt.Color.black),
-				new Material(0,1,150,0.2,0.8),
-				new Point3D(0,0,110),
-				new Vector(0,-0.724,0.6896)
-		));
-
-		scene.addGeometries(new Plane(
-				new Color(29,25,37),
-				new Material(0,1,150,0.2,0.8),
-				new Point3D(0,0,110),
-				new Vector(-0.0453,-0.417,-0.907)
-		));
-
-		scene.addGeometries(new Sphere(
-				new Color(java.awt.Color.green),
-				new Material(0.5, 0.5, 100), 3.5,
-				new Point3D(-15, 0, 3)));
-
-
-
-		//**********************************  The big sphere ************************************//
-
 		scene.addGeometries(
-				new Sphere(
-						new Color(java.awt.Color.BLUE),
-						new Material(0.5, 0.5, 100,0.6,0.4), 50,
-						new Point3D(0, 0, 50)));
+				new Cylinder(
+						new Color(java.awt.Color.red),
+						new Material(0.3,0.3,150,0.3,0.3), 25,
+						new Ray(
+								new Point3D(50, -40, 12),
+								new Vector(0,0,1)), 100));
 
 
 
@@ -208,7 +186,7 @@ public class ReflectionRefractionTests {
 				new Vector(0,-250,80).crossProduct(new Vector(-1,0,0))));
 		scene.setDistance(200);
 		scene.setBackground(Color.BLACK);
-		scene.setAmbientLight(new AmbientLight(Color.BLACK, 0));
+		scene.setAmbientLight(new AmbientLight(Color.BLACK, 0.1));
 
 
 		scene.addGeometries(new Plane(
@@ -218,15 +196,83 @@ public class ReflectionRefractionTests {
 				new Vector(0,0,1)));
 		/***********  Cylinder ************************************/
 
-		scene.addGeometries(
+		/*scene.addGeometries(
 				new Cylinder(
 						new Color(java.awt.Color.red),
 						new Material(0.3,0.3,150,0.3,0.3), 25,
 						new Ray(
 								new Point3D(50, -40, 12),
-								new Vector(0,0,1)), 100));
+								new Vector(0,0,1)), 100));*/
+
+		scene.addGeometries(new Plane(
+				Color.BLACK,
+				new Material(0.4,0.6,150,0.2,0.4),
+				new Point3D(0,0,50),
+				new Vector(0,0,1)));
+
+		//**********************************  Sphere ************************************//
+
+		scene.addGeometries(
+				new Sphere(new Color(java.awt.Color.BLACK),
+						new Material(0, 1, 100, 0.2, 0.8), 20,
+						new Point3D(-50, -20, 30)));
+
+		scene.addGeometries(
+				new Sphere(new Color(java.awt.Color.BLACK),
+						new Material(0, 1, 100, 0.2, 0.8), 30,
+						new Point3D(-65, -75, 20)));
+
+		//**********************************  Polygons ************************************//
 
 
+		scene.addGeometries(new geometries.Polygon
+						(new Color(java.awt.Color.YELLOW),
+								new Material(0.5, 0.5, 150, 0.8, 0.2),
+								new Point3D(0, -40, 0),
+								new Point3D(20, -20, 50),
+								new Point3D(20, -60, 50)),
+				new geometries.Polygon
+						(new Color(java.awt.Color.YELLOW),
+								new Material(0, 1, 150, 0.7, 0.3),
+								new Point3D(20, -20, 50),
+								new Point3D(3.52, -36.88, 50),
+								new Point3D(0, -40, 0)),
+				new geometries.Polygon
+						(new Color(java.awt.Color.YELLOW),
+								new Material(0, 1, 150, 0.7, 0.3),
+								new Point3D(3.52, -36.88, 50),
+								new Point3D(0, -40, 0),
+								new Point3D(-3.65, -36.76, 50)),
+				new geometries.Polygon
+						(new Color(java.awt.Color.YELLOW),
+								new Material(0, 1, 150, 0.7, 0.3),
+								new Point3D(-3.65, -36.67, 50),
+								new Point3D(0, -40, 0),
+								new Point3D(-20.1, -20, 50)),
+				new geometries.Polygon
+						(new Color(java.awt.Color.YELLOW),
+								new Material(0, 1, 150, 0.7, 0.3),
+								new Point3D(-20.1, -20, 50),
+								new Point3D(0, -40, 0),
+								new Point3D(-20, -60, 50)),
+				new geometries.Polygon
+						(new Color(java.awt.Color.YELLOW),
+								new Material(0, 1, 150, 0.7, 0.3),
+								new Point3D(-20, -60, 50),
+								new Point3D(0, -40, 0),
+								new Point3D(-3.78, -43.85, 50)),
+				new geometries.Polygon
+						(new Color(java.awt.Color.YELLOW),
+								new Material(0, 1, 150, 0.7, 0.3),
+								new Point3D(-3.78, -43.85, 50),
+								new Point3D(0, -40, 0),
+								new Point3D(3.39, -43.51, 50)),
+				new geometries.Polygon
+						(new Color(java.awt.Color.YELLOW),
+								new Material(0, 1, 150, 0.7, 0.3),
+								new Point3D(3.39, -43.51, 50),
+								new Point3D(0, -40, 0),
+								new Point3D(20, -60, 50)));
 		scene.addLights(new PointLight(
 				new Color(1000, 600, 0),
 				new Point3D(-100, -100, 34),
