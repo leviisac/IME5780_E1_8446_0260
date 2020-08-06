@@ -11,12 +11,10 @@ import primitives.*;
 import renderer.*;
 import scene.Scene;
 
-import java.io.IOException;
-
 /**
  * Tests for reflection and transparency functionality, test for partial shadows
  * (with transparency)
- * 
+ *
  * @author dzilb
  *
  */
@@ -76,7 +74,7 @@ public class ReflectionRefractionTests {
 		render.renderImage(false);
 		render.writeToImage();
 	}
-	
+
 	/**
 	 * Produce a picture of a two triangles lighted by a spot light with a partially transparent Sphere
 	 *  producing partial shadow
@@ -147,10 +145,11 @@ public class ReflectionRefractionTests {
 	}
 
 
-
-
+	/**
+	 * Produce a picture of a many geometries lighted by a directional light with refraction and reflection
+	 */
 	@Test
-	public void tubeTest() throws IOException {
+	public void coronaSphere() {
 		Scene scene = new Scene("Test scene");
 		scene.setCamera(new Camera(
 				new Point3D(0, 0, -200),
@@ -160,23 +159,92 @@ public class ReflectionRefractionTests {
 		scene.setBackground(Color.BLACK);
 		scene.setAmbientLight(new AmbientLight(new Color(java.awt.Color.black), 0.1));
 
-		scene.addGeometries(
-				new Tube(
-						new Color(new Color(221, 160, 221)),
-						new Material(0.3, 0.3, 250), 2,
-						new Ray(new Point3D(0, 0, 5),
-								new Vector(2, 2, 2))));
+
+		scene.addGeometries(new Plane(
+				new Color(java.awt.Color.black),
+				new Material(0,1,150,0.2,0.8),
+				new Point3D(0,0,110),
+				new Vector(0,-0.724,0.6896)
+		));
+
+		scene.addGeometries(new Plane(
+				new Color(29,25,37),
+				new Material(0,1,150,0.2,0.8),
+				new Point3D(0,0,110),
+				new Vector(-0.0453,-0.417,-0.907)
+		));
+
+		scene.addGeometries(new Sphere(
+				new Color(java.awt.Color.green),
+				new Material(0.5, 0.5, 100), 3.5,
+				new Point3D(-15, 0, 3)));
 
 
 
 		//**********************************  The big sphere ************************************//
 
+		scene.addGeometries(
+				new Sphere(
+						new Color(java.awt.Color.BLUE),
+						new Material(0.5, 0.5, 100,0.6,0.4), 50,
+						new Point3D(0, 0, 50)));
+
+
+
 		scene.addLights(new DirectionalLight(new Color(255, 191, 191), new Vector(1, -1, 1)));
 
-		ImageWriter imageWriter = new ImageWriter("tubeTest", 200, 200, 500, 500);
+		ImageWriter imageWriter = new ImageWriter("coronaSphere", 200, 200, 1500, 1500);
 		Render render = new Render(imageWriter, scene);
 
 		render.renderImage(false);
 		render.writeToImage();
+	}
+	@Test
+	public void finalTest2() {
+		Scene scene = new Scene("Test scene");
+		scene.setCamera(new Camera(
+				new Point3D(0, 250, -80),
+				new Vector(0, -250, 80),
+				new Vector(0,-250,80).crossProduct(new Vector(-1,0,0))));
+		scene.setDistance(200);
+		scene.setBackground(Color.BLACK);
+		scene.setAmbientLight(new AmbientLight(Color.BLACK, 0));
+
+
+		scene.addGeometries(new Plane(
+				Color.BLACK,
+				new Material(0.4,0.6,150,0.2,0.4),
+				new Point3D(0,0,50),
+				new Vector(0,0,1)));
+		/***********  Cylinder ************************************/
+
+		scene.addGeometries(
+				new Cylinder(
+						new Color(java.awt.Color.red),
+						new Material(0.3,0.3,150,0.3,0.3), 25,
+						new Ray(
+								new Point3D(50, -40, 12),
+								new Vector(0,0,1)), 100));
+
+
+		scene.addLights(new PointLight(
+				new Color(1000, 600, 0),
+				new Point3D(-100, -100, 34),
+				0.0004, 0.0000006, 30));
+
+		scene.addLights(new SpotLight(new Color(1000, 600, 0), new Point3D(41.68, -67.52, 28.84), 1,
+				0.0004, 0.000006, new Vector(34.29, 9.93, 0)));
+
+		scene.addLights(new SpotLight(new Color(1000, 600, 0), new Point3D(-100, 100, -500), 1,
+				0.0004, 0.0000006,  new Vector(-1, 1, 2)));
+
+
+		ImageWriter imageWriter = new ImageWriter("finalTest", 150, 150, 500, 500);
+		Render render = new Render(imageWriter, scene);
+
+		render.renderImage(true);
+		render.writeToImage();
+
+
 	}
 }
